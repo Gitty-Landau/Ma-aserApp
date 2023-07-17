@@ -37,7 +37,6 @@ async function put(url, data) {
 
 async function get(url) {
   const response = await fetch(url);
-  console.log(response);
   manageErrors(response);
   const data = await response.json();
   return data;

@@ -3,6 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../../Button/Button";
 function Trow(props) {
+  function GetCategoryText(donation) {
+    if (donation.category) {
+      return donation.category;
+    } else {
+      return donation.exempt ? "Yes" : "No";
+    }
+  }
   function Delete() {
     console.log(props.obj);
   }
@@ -21,7 +28,7 @@ function Trow(props) {
           icon={faCircle}
           style={{ color: props.color }}
         />
-        {props.obj.category}
+        {GetCategoryText(props.obj)}
       </td>
       {!props.seeMoreButton ? (
         <>

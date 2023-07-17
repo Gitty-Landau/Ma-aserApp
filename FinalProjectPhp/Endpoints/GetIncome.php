@@ -18,7 +18,12 @@ if(isset($_GET['id'])) {
     $incomeArr[] = $income;
     }
 
-    echo json_encode($incomeArr);
+ 
+   
+
+   echo json_encode($incomeArr);
+
+   
 
 }
 else

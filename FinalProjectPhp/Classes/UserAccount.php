@@ -40,12 +40,12 @@ class UserAccount
     {
         return  $this->maaserpercent;
     }
-    public function GetIncomeArr():array
+    public function GetIncomeArr()
     {
         print_r($this->incomeArr);
         return  $this->incomeArr;
     }
-    public function GetDonationArr():array
+    public function GetDonationArr()
     {
         print_r($this->donationArr);
         return  $this->donationArr;

@@ -23,7 +23,6 @@ function MainDashBoard(props) {
     calculateDonationsSum()
   );
   const [balance, updateBalance] = useState(calculateBalance());
-
   return (
     <div class="bottom-container">
       <BCLeft

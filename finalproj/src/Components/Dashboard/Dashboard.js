@@ -7,44 +7,10 @@ import { useState } from "react";
 import { put, post, remove, get } from "../Fetch";
 import { useEffect } from "react";
 function Dashboard(props) {
-  const [userId, updateUserId] = useState(1);
-  async function loadDonations() {
-    let result = await get(
-      "http://localhost/FinalProject/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1"
-    );
-    console.log(result);
-  }
-
-  useEffect(() => {
-    loadDonations();
-  }, []);
   //Income
 
   const incomeHeaderArr = ["Company", "Date", "Amount", "Exempt from Ma'aser"];
 
-  const payment1 = {
-    key: 0,
-    company: "Compuskills",
-    date: "Jan 01,2023",
-    amount: 2000,
-    category: "Yes",
-  };
-
-  const payment2 = {
-    key: 1,
-    company: "NerTzaddik",
-    date: "Jan 04,2023",
-    amount: 2000,
-    category: "No",
-  };
-
-  const payment3 = {
-    key: 2,
-    company: "4UGifts",
-    date: "Jan 06,2023",
-    amount: 2000,
-    category: "No",
-  };
   const donationHeaderArr = ["Donations", "Date", "Amount", "Category"];
 
   const donation1 = {
@@ -68,13 +34,35 @@ function Dashboard(props) {
     amount: 2000,
     category: "Hachnasas Kallah",
   };
-  const [payments, updatePayments] = useState([payment1, payment2, payment3]);
-  const [donations, updateDonations] = useState([
-    { ...donation1, key: 0 },
-    { ...donation2, key: 1 },
-    { ...donation3, key: 2 },
-  ]);
+  const [payments, updatePayments] = useState([]);
+  const [donations, updateDonations] = useState([]);
+  const [userId, updateUserId] = useState(1);
+  async function loadPayments() {
+    try {
+      let result = await get(
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1"
+      );
 
+      updatePayments(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function loadDonations() {
+    try {
+      let result = await get(
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1"
+      );
+      updateDonations([...result]);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    loadPayments();
+    loadDonations();
+  }, []);
   const labels = [
     {
       category: "Hachnasas Kallah",

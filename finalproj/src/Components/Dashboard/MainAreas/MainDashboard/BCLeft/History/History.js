@@ -3,14 +3,11 @@ import Button from "../../../../Button/Button";
 import Trow from "./Trow/Trow";
 
 function History(props) {
-  function GetColor({ ...donation }) {
+  function GetColor(donation) {
     if (props.type == "donations") {
-      const donationObj = props.categoryArr.filter(function (item) {
-        return item.category == donation.category;
-      });
-      return donationObj[0].color;
+      return donation.color;
     } else {
-      return donation.category == "Yes" ? "#ffacc8" : "#a1a9fe";
+      return donation.exempts ? "#ffacc8" : "#a1a9fe";
     }
   }
 
@@ -30,8 +27,8 @@ function History(props) {
             <Trow
               seeMoreButton={props.seeMoreButton}
               icon={props.icon}
-              color={GetColor(donation)}
               obj={donation}
+              color={GetColor(donation)}
               deleteFunc={props.deleteFunc}
             ></Trow>
           );

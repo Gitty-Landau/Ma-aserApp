@@ -6,20 +6,22 @@ include_once("Database.php");
 class Donation
 {
     //Attributes
-    private $companyName;
-    private $amount;
-    private $date;
-    private $categoryID;
-    private $userID;
-    private $db;
+    public $companyName;
+    public $amount;
+    public $date;
+    public $category;
+    public $color;
+    public $userID;
+    public $db;
 
     //Constructor
-    public function __construct(string $companyName, float $amount, string $date, int $categoryID, int $userID, object $db)
+    public function __construct(string $companyName, float $amount, string $date, string $category, string $color, int $userID, object $db)
     {
         $this->companyName = $companyName;
         $this->amount = $amount;
         $this->date = $date;
-        $this->categoryID = $categoryID;
+        $this->color = $color;
+        $this->category = $category;
         $this->userID = $userID;
         $this->db = $db;
     }

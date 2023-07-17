@@ -5,12 +5,12 @@ include_once("Database.php");
 class Income
 {
     //Attributes
-    private $companyName;
-    private $exempt;
-    private $amount;
-    private $date;
-    private $userID;
-    private $db;
+    public $companyName;
+    public $exempt;
+    public $amount;
+    public $date;
+    public $userID;
+    public $db;
     //Constructor
     public function __construct(string $companyName, bool $exempt, float $amount, string $date, int $userID, object $db)
     {

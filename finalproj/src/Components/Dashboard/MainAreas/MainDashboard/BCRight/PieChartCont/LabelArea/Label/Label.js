@@ -2,7 +2,6 @@ import "./Label.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 function Label(props) {
-  console.log(props.color);
   return (
     <div class="pie-chart__labels-item">
       <div class="label">
