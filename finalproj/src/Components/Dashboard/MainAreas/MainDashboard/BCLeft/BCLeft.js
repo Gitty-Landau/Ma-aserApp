@@ -18,7 +18,7 @@ function BCLeft(props) {
 
       <History
         tabFunc={props.tabFunc}
-        categoryArr={props.categoryArr}
+        categoryObj={props.categoryObj}
         headerText={"Donation History"}
         tableHeaderArr={props.donationHeaderArr}
         donationsArr={props.donationsArr}
@@ -29,7 +29,7 @@ function BCLeft(props) {
       ></History>
       <History
         tabFunc={props.tabFunc}
-        categoryArr={props.categoryArr}
+        categoryObj={props.categoryObj}
         headerText={"Income History"}
         tableHeaderArr={props.incomeHeaderArr}
         donationsArr={props.paymentArr}

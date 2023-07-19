@@ -3,7 +3,7 @@ import Label from "./Label/Label";
 function LabelArea(props) {
   return (
     <div class="pie-chart__labels">
-      {props.categoryArr.map(function (label) {
+      {/* {props.categoryArr.map(function (label) {
         return (
           <Label
             labelColorClass={label.color}
@@ -11,7 +11,7 @@ function LabelArea(props) {
             amt={label.amt}
           ></Label>
         );
-      })}
+      })} */}
     </div>
   );
 }

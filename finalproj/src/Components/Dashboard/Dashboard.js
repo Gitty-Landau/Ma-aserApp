@@ -13,34 +13,13 @@ function Dashboard(props) {
 
   const donationHeaderArr = ["Donations", "Date", "Amount", "Category"];
 
-  const donation1 = {
-    key: 0,
-    company: "Yad Eliezer",
-    date: "Jan 01, 2023",
-    amount: 2000,
-    category: "Helping the Poor",
-  };
-  const donation2 = {
-    key: 1,
-    company: "Kollel Kever Rachel",
-    date: "Jan 04,2022",
-    amount: 2000,
-    category: "Torah Institutions",
-  };
-  const donation3 = {
-    key: 2,
-    company: "Likrat Kallah",
-    date: "Jan 06,2023",
-    amount: 2000,
-    category: "Hachnasas Kallah",
-  };
   const [payments, updatePayments] = useState([]);
   const [donations, updateDonations] = useState([]);
   const [userId, updateUserId] = useState(1);
   async function loadPayments() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
       );
       result = result.map((element) => {
         return { ...element, category: element.exempt };
@@ -54,9 +33,8 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
       );
-
       updateDonations(result);
     } catch (e) {
       console.log(e);
@@ -67,32 +45,13 @@ function Dashboard(props) {
     loadPayments();
     loadDonations();
   }, []);
-  const labels = [
-    {
-      category: "Hachnasas Kallah",
-      amt: "$8,000.00",
-      index: "first",
-      color: "#eb7ca6",
-    },
-    {
-      category: "Helping the Poor",
-      amt: "$2,130.00",
-      index: "second",
-      color: "#ffacc8",
-    },
-    {
-      category: "Medical Institutions",
-      amt: "$1,510.00",
-      index: "third",
-      color: "#cc6ff8",
-    },
-    {
-      category: "Torah Institutions",
-      amt: "$2,245.00",
-      index: "fourth",
-      color: "#7c5cfc",
-    },
-  ];
+  const labels = {
+    "Hachnasas Kallah": "#eb7ca6",
+    "Helping the Poor": "#ffacc8",
+    "Medical Institutions": "#cc6ff8",
+    "Torah Institutions": "#7c5cfc",
+  };
+
   function AddPayment(obj) {
     updatePayments(function (prev) {
       return [...prev, obj];
@@ -120,7 +79,7 @@ function Dashboard(props) {
 
     try {
       const result = await post(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
         obj
       );
       obj.incomeID = result;
@@ -133,13 +92,14 @@ function Dashboard(props) {
   async function SendDonationToDB(obj) {
     //fetch
     obj.userID = userID;
-
+    console.log(obj);
     try {
       const result = await post(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
         obj
       );
       obj.donationID = result;
+
       AddDonation(obj);
       return result;
     } catch (e) {
@@ -149,7 +109,7 @@ function Dashboard(props) {
   function DeletePayment(obj) {
     console.log(obj);
     remove(
-      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
+      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
       { IncomeID: obj.incomeID }
     );
     updatePayments(function (prev) {
@@ -159,9 +119,8 @@ function Dashboard(props) {
     });
   }
   function DeleteDonation(obj) {
-    console.log(obj.donationID);
     remove(
-      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteDonation.php",
+      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/DeleteDonation.php",
       { DonationID: obj.donationID }
     );
     updateDonations(function (prev) {
@@ -174,7 +133,7 @@ function Dashboard(props) {
   const ComponentArray = [
     <MainDashBoard
       tabFunc={props.tabFunc}
-      categoryArr={labels}
+      categoryObj={labels}
       paymentArr={payments}
       donationsArr={donations}
       incomeHeaderArr={incomeHeaderArr}
@@ -189,7 +148,7 @@ function Dashboard(props) {
     ></Income>,
     <Donations
       addToDbFunction={SendDonationToDB}
-      categoryArr={labels}
+      categoryObj={labels}
       headerArr={donationHeaderArr}
       donationsArr={donations}
       deleteFunc={DeleteDonation}

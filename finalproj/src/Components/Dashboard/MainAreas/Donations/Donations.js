@@ -11,7 +11,7 @@ function Donations(props) {
     <div class="bottom-container">
       <div class="bottom-container__left">
         <History
-          categoryArr={props.categoryArr}
+          categoryObj={props.categoryObj}
           headerText={"Donation History"}
           tableHeaderArr={props.headerArr}
           donationsArr={props.donationsArr}
@@ -24,7 +24,7 @@ function Donations(props) {
       <div class="bottom-container__right">
         <Form
           addToDbFunction={props.addToDbFunction}
-          categoryArr={props.categoryArr}
+          categoryObj={props.categoryObj}
           donationsArr={props.donationsArr}
         ></Form>
       </div>

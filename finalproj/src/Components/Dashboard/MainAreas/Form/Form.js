@@ -7,6 +7,7 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 function Form(props) {
   const [inputs, updateInputs] = useState({ category: false });
   const [checked, updateChecked] = useState(false);
+
   return (
     <div class="box">
       <form className="form">
@@ -91,7 +92,6 @@ function Form(props) {
                 name="category"
                 onChange={(e) =>
                   updateInputs(function (prev) {
-                    console.log(e.target.counter);
                     return {
                       ...prev,
                       category: e.target.value,
@@ -101,8 +101,8 @@ function Form(props) {
                 }
               >
                 <option>Select Category</option>
-                {props.categoryArr.map(function (item) {
-                  return <option value={item.category}>{item.category}</option>;
+                {Object.keys(props.categoryObj).map(function (item) {
+                  return <option value={item}>{item}</option>;
                 })}
               </select>
             </div>

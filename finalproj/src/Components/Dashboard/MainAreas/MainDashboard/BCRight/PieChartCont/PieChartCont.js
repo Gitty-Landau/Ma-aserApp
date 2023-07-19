@@ -9,7 +9,7 @@ function PieChartCont(props) {
           <h3 class="section-header">Donations by category</h3>
         </div>
         <Pie></Pie>
-        <LabelArea categoryArr={props.categoryArr}></LabelArea>
+        <LabelArea categoryObj={props.categoryObj}></LabelArea>
       </div>
     </>
   );

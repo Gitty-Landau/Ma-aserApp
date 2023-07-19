@@ -3,15 +3,6 @@ import Button from "../../../../Button/Button";
 import Trow from "./Trow/Trow";
 
 function History(props) {
-  function GetColor(donation) {
-    if (props.type == "donations") {
-      return donation.categoryColor;
-    } else {
-      console.log(donation.exempt);
-      return donation.exempt ? "#ffacc8" : "#a1a9fe";
-    }
-  }
-
   return (
     <div class="box transaction-box">
       <div class="header-container">
@@ -26,10 +17,11 @@ function History(props) {
         {props.donationsArr.map(function (donation, index) {
           return (
             <Trow
+              categoryObj={props.categoryObj}
+              type={props.type}
               seeMoreButton={props.seeMoreButton}
               icon={props.icon}
               obj={donation}
-              color={GetColor(donation)}
               deleteFunc={props.deleteFunc}
             ></Trow>
           );

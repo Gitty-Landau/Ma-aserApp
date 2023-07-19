@@ -1,9 +1,9 @@
 import "./Trow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../../Button/Button";
+import Income from "../../../../Income/Income";
 function Trow(props) {
-  console.log(props.color);
   function GetCategoryText(donation) {
     if (donation.category != true && donation.category != false) {
       return donation.category;
@@ -11,7 +11,6 @@ function Trow(props) {
       return donation.category ? "Yes" : "No";
     }
   }
-  function Delete() {}
 
   return (
     <tr>
@@ -22,12 +21,20 @@ function Trow(props) {
       <td>{props.obj.date}</td>
       <td>${props.obj.amount}</td>
       <td>
-        <FontAwesomeIcon
-          className="point"
-          size={"xs"}
-          icon={faCircle}
-          style={{ color: props.color }}
-        />
+        {props.type == "donations" ? (
+          <FontAwesomeIcon
+            className="point"
+            size={"xs"}
+            icon={faCircle}
+            style={{ color: props.categoryObj[props.obj.category] }}
+          />
+        ) : (
+          <FontAwesomeIcon
+            className="point"
+            icon={props.obj.exempt ? faCheck : faXmark}
+          />
+        )}
+
         {GetCategoryText(props.obj)}
       </td>
       {!props.seeMoreButton ? (

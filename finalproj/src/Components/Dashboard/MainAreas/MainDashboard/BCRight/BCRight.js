@@ -18,7 +18,7 @@ function BCRight(props) {
           </Button>
         }
       ></Total>
-      <PieChartCont categoryArr={props.categoryArr}></PieChartCont>
+      <PieChartCont categoryObj={props.categoryObj}></PieChartCont>
     </div>
   );
 }

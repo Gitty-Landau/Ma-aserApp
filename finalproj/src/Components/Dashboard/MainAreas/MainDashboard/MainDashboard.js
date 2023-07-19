@@ -26,7 +26,7 @@ function MainDashBoard(props) {
       <BCLeft
         totalDonations={totalDonations}
         totalIncome={totalIncome}
-        categoryArr={props.categoryArr}
+        categoryObj={props.categoryObj}
         paymentArr={props.paymentArr}
         donationsArr={props.donationsArr}
         incomeHeaderArr={props.incomeHeaderArr}
@@ -34,7 +34,7 @@ function MainDashBoard(props) {
         tabFunc={props.tabFunc}
         updateActiveKey={props.updateActiveKey}
       ></BCLeft>
-      <BCRight categoryArr={props.categoryArr} balance={balance}></BCRight>
+      <BCRight categoryObj={props.categoryObj} balance={balance}></BCRight>
     </div>
   );
 }
