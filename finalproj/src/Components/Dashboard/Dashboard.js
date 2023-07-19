@@ -19,7 +19,7 @@ function Dashboard(props) {
   async function loadPayments() {
     try {
       let result = await get(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
       );
       result = result.map((element) => {
         return { ...element, category: element.exempt };
@@ -33,7 +33,7 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
       );
       updateDonations(result);
     } catch (e) {
@@ -92,7 +92,7 @@ function Dashboard(props) {
   async function SendDonationToDB(obj) {
     //fetch
     obj.userID = userID;
-    console.log(obj);
+
     try {
       const result = await post(
         "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
@@ -107,7 +107,6 @@ function Dashboard(props) {
     }
   }
   function DeletePayment(obj) {
-    console.log(obj);
     remove(
       "http://localhost/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
       { IncomeID: obj.incomeID }

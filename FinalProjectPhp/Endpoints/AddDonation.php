@@ -24,8 +24,7 @@ if (!is_array($decoded) || empty($decoded['companyName']) || empty($decoded['amo
   echo json_encode(['error' => 'Some required information is missing']);
 } else {
   $phpdate = strtotime($decoded['date']);
-  $mysqldate = date('Y-m-d', $phpdate);
-  $donation = new Donation($decoded['companyName'], $decoded['amount'], $mysqldate, $decoded['userID'], $db, $decoded['category']);
+  $donation = new Donation($decoded['companyName'], $decoded['amount'], $decoded['date'], $decoded['userID'], $db, $decoded['category']);
   $newID = $donation->Insert();
   echo $newID;
 }

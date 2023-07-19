@@ -17,6 +17,7 @@ function History(props) {
         {props.donationsArr.map(function (donation, index) {
           return (
             <Trow
+              updateEditID={props.updateEditID}
               categoryObj={props.categoryObj}
               type={props.type}
               seeMoreButton={props.seeMoreButton}

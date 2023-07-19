@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../../Button/Button";
 import Income from "../../../../Income/Income";
+
 function Trow(props) {
+  console.log(props);
   function GetCategoryText(donation) {
     if (donation.category != true && donation.category != false) {
       return donation.category;
@@ -11,7 +13,6 @@ function Trow(props) {
       return donation.category ? "Yes" : "No";
     }
   }
-
   return (
     <tr>
       <td>
@@ -42,8 +43,14 @@ function Trow(props) {
           <td onClick={() => props.deleteFunc(props.obj)}>
             <Button text="Delete"></Button>
           </td>
-          <td>
-            <Button text="Update"></Button>
+          <td
+            onClick={() => {
+              props.type == "donations"
+                ? props.updateEditID(props.donationID)
+                : props.updateEditID(props.incomeID);
+            }}
+          >
+            <Button text="Edit"></Button>
           </td>
         </>
       ) : (
