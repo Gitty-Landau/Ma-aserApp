@@ -8,7 +8,7 @@ import { put, post, remove, get } from "../Fetch";
 import { useEffect } from "react";
 function Dashboard(props) {
   //Income
-
+  const userID = 1;
   const incomeHeaderArr = ["Company", "Date", "Amount", "Exempt from Ma'aser"];
 
   const donationHeaderArr = ["Donations", "Date", "Amount", "Category"];
@@ -40,8 +40,11 @@ function Dashboard(props) {
   async function loadPayments() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1"
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
       );
+      result = result.map((element) => {
+        return { ...element, category: element.exempt };
+      });
 
       updatePayments(result);
     } catch (e) {
@@ -51,9 +54,10 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1"
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-17"
       );
-      updateDonations([...result]);
+
+      updateDonations(result);
     } catch (e) {
       console.log(e);
     }
@@ -90,7 +94,9 @@ function Dashboard(props) {
     },
   ];
   function AddPayment(obj) {
-    updatePayments(obj);
+    updatePayments(function (prev) {
+      return [...prev, obj];
+    });
     updatePayments(function (prev) {
       return prev.map(function (item, index) {
         return { ...item, key: index };
@@ -98,24 +104,69 @@ function Dashboard(props) {
     });
   }
   function AddDonation(obj) {
-    updateDonations(obj);
+    updateDonations(function (prev) {
+      return [...prev, obj];
+    });
     updateDonations(function (prev) {
       return prev.map(function (item, index) {
         return { ...item, key: index };
       });
     });
   }
+  async function SendPaymentToDB(obj) {
+    //fetch
+    obj.exempt = obj.category.toString();
+    obj.userID = userID;
+
+    try {
+      const result = await post(
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
+        obj
+      );
+      obj.incomeID = result;
+      AddPayment(obj);
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async function SendDonationToDB(obj) {
+    //fetch
+    obj.userID = userID;
+
+    try {
+      const result = await post(
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
+        obj
+      );
+      obj.donationID = result;
+      AddDonation(obj);
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
+  }
   function DeletePayment(obj) {
+    console.log(obj);
+    remove(
+      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
+      { IncomeID: obj.incomeID }
+    );
     updatePayments(function (prev) {
       return prev.filter(function (item) {
-        return item.key != obj.key;
+        return item.incomeID != obj.incomeID;
       });
     });
   }
   function DeleteDonation(obj) {
+    console.log(obj.donationID);
+    remove(
+      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteDonation.php",
+      { DonationID: obj.donationID }
+    );
     updateDonations(function (prev) {
       return prev.filter(function (item) {
-        return item.key != obj.key;
+        return item.donationID != obj.donationID;
       });
     });
   }
@@ -131,15 +182,15 @@ function Dashboard(props) {
       updateActiveKey={props.updateActiveKey}
     ></MainDashBoard>,
     <Income
+      addToDbFunction={SendPaymentToDB}
       headerArr={incomeHeaderArr}
-      updateArrFunc={AddPayment}
       paymentArr={payments}
       deleteFunc={DeletePayment}
     ></Income>,
     <Donations
+      addToDbFunction={SendDonationToDB}
       categoryArr={labels}
       headerArr={donationHeaderArr}
-      updateArrFunc={AddDonation}
       donationsArr={donations}
       deleteFunc={DeleteDonation}
     ></Donations>,

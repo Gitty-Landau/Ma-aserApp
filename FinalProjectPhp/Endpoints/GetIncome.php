@@ -9,12 +9,12 @@ include '../Classes/Income.php';
 $db = new Database();
 if(isset($_GET['id'])) {
     http_response_code(200);
-    $result = $db->query("Select * from Income where UserID = ?", [$_GET['id']])->get_result();
+    $result = $db->query("Select * from Income where UserID = ? And Date >= ? And Date <= ?", [$_GET['id'],$_GET['startDate'],$_GET['endDate']])->get_result();
 
     $incomeArr = [];
 
     while($row = $result->fetch_assoc()) {
-    $income = new Income($row['CompanyName'], $row['Exempt'], $row['Amount'], $row['Date'],$row['UserID'],$db);
+    $income = new Income($row['CompanyName'], $row['Exempt'], $row['Amount'], $row['Date'],$row['UserID'],$db, $row['IncomeID']);
     $incomeArr[] = $income;
     }
 

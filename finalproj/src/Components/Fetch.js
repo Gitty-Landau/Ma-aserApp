@@ -1,5 +1,6 @@
 function manageErrors(response) {
   if (!response.ok) {
+    console.log(response);
     throw new Error(response.statusText);
   }
   return response;
@@ -8,11 +9,13 @@ function manageErrors(response) {
 async function post(url, data) {
   const response = await fetch(url, {
     method: "POST",
+
     headers: {
       "Content-type": "application/json",
     },
     body: JSON.stringify(data),
   });
+
   manageErrors(response);
 
   const resData = await response.json();

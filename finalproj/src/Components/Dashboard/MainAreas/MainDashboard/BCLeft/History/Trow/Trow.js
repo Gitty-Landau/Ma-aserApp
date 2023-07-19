@@ -3,21 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../../Button/Button";
 function Trow(props) {
+  console.log(props.color);
   function GetCategoryText(donation) {
-    if (donation.category) {
+    if (donation.category != true && donation.category != false) {
       return donation.category;
     } else {
-      return donation.exempt ? "Yes" : "No";
+      return donation.category ? "Yes" : "No";
     }
   }
-  function Delete() {
-    console.log(props.obj);
-  }
+  function Delete() {}
+
   return (
     <tr>
       <td>
         <FontAwesomeIcon icon={props.icon}></FontAwesomeIcon>
-        {props.obj.company}
+        {props.obj.companyName}
       </td>
       <td>{props.obj.date}</td>
       <td>${props.obj.amount}</td>

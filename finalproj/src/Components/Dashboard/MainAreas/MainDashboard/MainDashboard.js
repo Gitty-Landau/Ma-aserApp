@@ -18,11 +18,9 @@ function MainDashBoard(props) {
     }, 0);
     return sum;
   }
-  const [totalIncome, updateTotalIncome] = useState(calculatePaymentSum());
-  const [totalDonations, updateTotalDonations] = useState(
-    calculateDonationsSum()
-  );
-  const [balance, updateBalance] = useState(calculateBalance());
+  const totalIncome = calculatePaymentSum();
+  const totalDonations = calculateDonationsSum();
+  const balance = calculateBalance();
   return (
     <div class="bottom-container">
       <BCLeft

@@ -5,7 +5,7 @@ import Income from "../Income/Income";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 function Form(props) {
-  const [inputs, updateInputs] = useState({ category: "No" });
+  const [inputs, updateInputs] = useState({ category: false });
   const [checked, updateChecked] = useState(false);
   return (
     <div class="box">
@@ -33,13 +33,13 @@ function Form(props) {
           Company Name
         </label>
         <input
-          value={inputs.company}
+          value={inputs.companyName}
           type="text"
           name="company"
           id="company"
           onChange={(e) =>
             updateInputs(function (prev) {
-              return { ...prev, company: e.target.value };
+              return { ...prev, companyName: e.target.value };
             })
           }
         ></input>
@@ -69,8 +69,7 @@ function Form(props) {
                     return !prev;
                   });
                   updateInputs(function (prev) {
-                    const exempt = prev.category == "Yes" ? "No" : "Yes";
-                    return { ...prev, category: exempt };
+                    return { ...prev, category: !prev.category };
                   });
                 }}
                 checked={checked}
@@ -92,7 +91,12 @@ function Form(props) {
                 name="category"
                 onChange={(e) =>
                   updateInputs(function (prev) {
-                    return { ...prev, category: e.target.value };
+                    console.log(e.target.counter);
+                    return {
+                      ...prev,
+                      category: e.target.value,
+                      categoryID: e.target.selectedIndex,
+                    };
                   })
                 }
               >
@@ -111,15 +115,14 @@ function Form(props) {
           onClick={(e) => {
             e.preventDefault();
 
-            props.updateArrFunc(function (prev) {
-              return [...prev, inputs];
-            });
+            props.addToDbFunction(inputs);
+
             updateInputs(function (prev) {
               return {
-                company: "",
+                companyName: "",
                 amount: "",
                 date: "",
-                category: "No",
+                category: false,
               };
             });
             updateChecked(false);
@@ -133,7 +136,7 @@ function Form(props) {
 
             updateInputs(function (prev) {
               return {
-                company: "",
+                companyName: "",
                 amount: "",
                 date: "",
               };

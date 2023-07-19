@@ -5,9 +5,10 @@ import Trow from "./Trow/Trow";
 function History(props) {
   function GetColor(donation) {
     if (props.type == "donations") {
-      return donation.color;
+      return donation.categoryColor;
     } else {
-      return donation.exempts ? "#ffacc8" : "#a1a9fe";
+      console.log(donation.exempt);
+      return donation.exempt ? "#ffacc8" : "#a1a9fe";
     }
   }
 

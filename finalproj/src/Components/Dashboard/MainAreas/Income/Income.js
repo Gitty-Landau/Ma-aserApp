@@ -21,7 +21,7 @@ function Income(props) {
       </div>
       <div class="bottom-container__right">
         <Form
-          updateArrFunc={props.updateArrFunc}
+          addToDbFunction={props.addToDbFunction}
           donationsArr={props.paymentArr}
           additionalCategory="exempt"
         ></Form>

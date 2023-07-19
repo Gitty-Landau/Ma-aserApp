@@ -5,6 +5,7 @@ include_once("Database.php");
 class Income
 {
     //Attributes
+    public $incomeID;
     public $companyName;
     public $exempt;
     public $amount;
@@ -12,7 +13,7 @@ class Income
     public $userID;
     public $db;
     //Constructor
-    public function __construct(string $companyName, bool $exempt, float $amount, string $date, int $userID, object $db)
+    public function __construct(string $companyName, bool $exempt, float $amount, string $date, int $userID, object $db,int $incomeID=0 )
     {
         $this->companyName=$companyName;
         $this->exempt=$exempt;
@@ -20,6 +21,7 @@ class Income
         $this->date=$date;
         $this->userID=$userID;
         $this->db=$db;
+        $this->incomeID=$incomeID;
     }
     //Getters
     public function GetCompanyName():string{

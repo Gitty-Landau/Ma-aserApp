@@ -23,8 +23,8 @@ function Donations(props) {
       </div>
       <div class="bottom-container__right">
         <Form
+          addToDbFunction={props.addToDbFunction}
           categoryArr={props.categoryArr}
-          updateArrFunc={props.updateArrFunc}
           donationsArr={props.donationsArr}
         ></Form>
       </div>

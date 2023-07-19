@@ -27,7 +27,7 @@ $decoded = json_decode($content, true);
  else {
     $phpdate = strtotime( $decoded['date'] );
     $mysqldate = date( 'Y-m-d', $phpdate);
-    $donation = new Donation($decoded['companyName'],$decoded['amount'],$mysqldate,$decoded['categoryID'],$decoded['userID'],$db);
+    $donation = new Donation($decoded['companyName'],$decoded['amount'],$mysqldate,$decoded['userID'],$db,$decoded['categoryID']);
     $newID = $donation->Insert();
     echo $newID;
  }
