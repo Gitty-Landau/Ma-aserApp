@@ -1,0 +1,70 @@
+.form input[type="date"] {
+  margin: 0%;
+  border: 2px solid lightgray;
+}
+
+input,
+select {
+  height: 35px;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid lightgray;
+  background-color: #f3f5f7;
+}
+
+.form label {
+  margin: 0px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+input:focus,
+select:focus,
+input[type="date"]:focus {
+  outline: none;
+  border: 2px solid #7c5cfc;
+}
+
+/*buttons*/
+
+.form input[type="submit"],
+form input[type="button"] {
+  border: #7c5cfc 2px solid;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  font-weight: bold;
+}
+.form input[type="submit"]:hover,
+form input[type="button"]:hover {
+  background-color: #7c5cfc;
+  color: white;
+}
+.form input[type="submit"] {
+  margin-top: 35px;
+}
+/*checkBox*/
+.checkbox-container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.checkbox,
+.checkbox-container label {
+  margin: 0;
+  padding: 0;
+  margin-right: 7px;
+}
+/*select*/
+select {
+  color: #95a5a6;
+  font-size: inherit;
+  font-family: inherit;
+}
+.form {
+  margin: auto;
+  width: 50vh;
+}

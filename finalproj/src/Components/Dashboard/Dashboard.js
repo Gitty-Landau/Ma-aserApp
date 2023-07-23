@@ -6,20 +6,22 @@ import Donations from "./MainAreas/Donations/Donations";
 import { useState } from "react";
 import { put, post, remove, get } from "../Fetch";
 import { useEffect } from "react";
+import ReactModal from "react-modal";
+import LoginForm from "./MainAreas/LoginForm/LoginForm";
 function Dashboard(props) {
   //Income
-  const userID = 1;
+
   const incomeHeaderArr = ["Company", "Date", "Amount", "Exempt from Ma'aser"];
 
   const donationHeaderArr = ["Donations", "Date", "Amount", "Category"];
 
   const [payments, updatePayments] = useState([]);
   const [donations, updateDonations] = useState([]);
-  const [userId, updateUserId] = useState(1);
+  const [userId, updateUserId] = useState(0);
   async function loadPayments() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
+        `http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=${userId}&startDate=2023-01-01&endDate=2023-07-19`
       );
       result = result.map((element) => {
         return { ...element, category: element.exempt };
@@ -33,7 +35,7 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
+        `http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=${userId}&startDate=2023-01-01&endDate=2023-07-19`
       );
       updateDonations(result);
     } catch (e) {
@@ -75,7 +77,7 @@ function Dashboard(props) {
   async function SendPaymentToDB(obj) {
     //fetch
     obj.exempt = obj.exempt.toString();
-    obj.userID = userID;
+    obj.userID = userId;
     console.log(obj);
     try {
       const result = await post(
@@ -92,7 +94,7 @@ function Dashboard(props) {
   }
   async function SendDonationToDB(obj) {
     //fetch
-    obj.userID = userID;
+    obj.userID = userId;
 
     try {
       const result = await post(
@@ -157,6 +159,12 @@ function Dashboard(props) {
 
   return (
     <main class="main-content">
+      <ReactModal
+        isOpen={userId == 0}
+        contentElement={() => (
+          <LoginForm updateUserId={updateUserId}></LoginForm>
+        )}
+      ></ReactModal>
       <Header></Header>
       {ComponentArray[props.displayTab]}
     </main>
