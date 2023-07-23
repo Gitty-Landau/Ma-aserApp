@@ -21,13 +21,13 @@ $decoded = json_decode($content, true);
 
  if(!is_array($decoded) || empty($decoded['companyName']) || empty($decoded['exempt']) || empty($decoded['amount']) || empty($decoded['date']) || empty($decoded['userID'])) {
   http_response_code(404);
-  echo json_encode(['error' => empty($decoded['companyName'])]);
+  echo json_encode(['error' => empty($decoded['exempt'])]);
  
 } 
  else {
-    $phpdate = strtotime( $decoded['date'] );
-    $mysqldate = date( 'Y-m-d', $phpdate);
-    $income = new Income($decoded['companyName'],$decoded['exempt'],$decoded['amount'],$mysqldate,$decoded['userID'],$db);
+  if($decoded['exempt'] == true){$exempt =  true;}
+  else{$exempt=false;}
+    $income = new Income($decoded['companyName'],$decoded['exempt'],$decoded['amount'],$decoded['date'],$decoded['userID'],$db);
     $newID = $income->Insert();
     echo json_encode($newID) ;
  }

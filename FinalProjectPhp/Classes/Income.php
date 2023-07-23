@@ -41,7 +41,8 @@ class Income
     }
     //Insert
     public function Insert(): int
-    {
+    {   
+
         $result = $this->db->query("INSERT INTO Income (CompanyName, Exempt, Amount, Date, UserID) VALUES(?,?,?,?,?)", [$this->companyName, $this->exempt, $this->amount, $this->date, $this->userID]);
         return $result->insert_id;
     }

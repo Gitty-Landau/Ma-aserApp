@@ -10,6 +10,9 @@ import {
 import History from "../MainDashboard/BCLeft/History/History";
 function Donations(props) {
   const [editID, updateEditID] = useState(0);
+  const editObj = props.donationsArr.filter(function (donation) {
+    return donation.donationID == editID;
+  });
 
   return (
     <div class="bottom-container">
@@ -28,7 +31,10 @@ function Donations(props) {
       </div>
       <div class="bottom-container__right">
         {editID != 0 ? (
-          <UpdateForm categoryObj={props.categoryObj}></UpdateForm>
+          <UpdateForm
+            editObj={editObj}
+            categoryObj={props.categoryObj}
+          ></UpdateForm>
         ) : (
           <Form
             addToDbFunction={props.addToDbFunction}

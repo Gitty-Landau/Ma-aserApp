@@ -19,7 +19,7 @@ function Dashboard(props) {
   async function loadPayments() {
     try {
       let result = await get(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
       );
       result = result.map((element) => {
         return { ...element, category: element.exempt };
@@ -33,7 +33,7 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=1&startDate=2023-01-01&endDate=2023-07-19"
       );
       updateDonations(result);
     } catch (e) {
@@ -74,15 +74,16 @@ function Dashboard(props) {
   }
   async function SendPaymentToDB(obj) {
     //fetch
-    obj.exempt = obj.category.toString();
+    obj.exempt = obj.exempt.toString();
     obj.userID = userID;
-
+    console.log(obj);
     try {
       const result = await post(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
         obj
       );
       obj.incomeID = result;
+      console.log(obj);
       AddPayment(obj);
       return result;
     } catch (e) {
@@ -95,7 +96,7 @@ function Dashboard(props) {
 
     try {
       const result = await post(
-        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
+        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
         obj
       );
       obj.donationID = result;
@@ -108,7 +109,7 @@ function Dashboard(props) {
   }
   function DeletePayment(obj) {
     remove(
-      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
+      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
       { IncomeID: obj.incomeID }
     );
     updatePayments(function (prev) {

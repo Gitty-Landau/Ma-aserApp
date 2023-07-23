@@ -12,12 +12,10 @@ import { useState } from "react";
 function Income(props) {
   const [editID, updateEditID] = useState(0);
 
-  const obj = props.paymentArr.filter(function (payment) {
+  const editObj = props.paymentArr.filter(function (payment) {
     return payment.incomeID == editID;
   });
 
-  const editObj = obj[0];
-  console.log(editID);
   return (
     <div class="bottom-container" id="income">
       <div class="bottom-container__left">
@@ -32,7 +30,10 @@ function Income(props) {
       </div>
       <div class="bottom-container__right">
         {editID != 0 ? (
-          <UpdateForm obj={editObj} additionalCategory="exempt"></UpdateForm>
+          <UpdateForm
+            editObj={editObj}
+            additionalCategory="exempt"
+          ></UpdateForm>
         ) : (
           <Form
             addToDbFunction={props.addToDbFunction}

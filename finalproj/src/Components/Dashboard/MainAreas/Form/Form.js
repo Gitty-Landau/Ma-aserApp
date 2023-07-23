@@ -5,9 +5,8 @@ import Income from "../Income/Income";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 function Form(props) {
-  const [inputs, updateInputs] = useState({ category: false });
+  const [inputs, updateInputs] = useState({ exempt: false });
   const [checked, updateChecked] = useState(false);
-
   return (
     <div class="box">
       <form className="form">
@@ -70,7 +69,10 @@ function Form(props) {
                     return !prev;
                   });
                   updateInputs(function (prev) {
-                    return { ...prev, category: !prev.category };
+                    return {
+                      ...prev,
+                      exempt: !prev.exempt,
+                    };
                   });
                 }}
                 checked={checked}
@@ -122,7 +124,7 @@ function Form(props) {
                 companyName: "",
                 amount: "",
                 date: "",
-                category: false,
+                exempt: false,
               };
             });
             updateChecked(false);
@@ -139,6 +141,7 @@ function Form(props) {
                 companyName: "",
                 amount: "",
                 date: "",
+                exempt: false,
               };
             });
             updateChecked(false);

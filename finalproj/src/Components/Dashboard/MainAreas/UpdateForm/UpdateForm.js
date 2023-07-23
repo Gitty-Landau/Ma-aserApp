@@ -1,9 +1,31 @@
 import "./UpdateForm.css";
 import { useState } from "react";
+import { useEffect } from "react";
+import { put } from "../../../Fetch.js";
 function UpdateForm(props) {
   const [inputs, updateInputs] = useState({ category: false });
   const [checked, updateChecked] = useState(false);
-  console.log(props.obj);
+  useEffect(
+    function () {
+      updateInputs(...props.editObj);
+      if (props.editObj[0].exempt) {
+        updateChecked(true);
+      }
+    },
+    [props.editObj]
+  );
+  async function SendUpdatedIncome() {
+    let result = await put(
+      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/EditIncome.php",
+      inputs
+    );
+  }
+  async function SendUpdatedDonation() {
+    let result = await put(
+      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/EditDonation.php",
+      inputs
+    );
+  }
   return (
     <div class="box">
       <form className="form">
@@ -110,7 +132,11 @@ function UpdateForm(props) {
           onClick={(e) => {
             e.preventDefault();
 
-            props.addToDbFunction(inputs);
+            if (props.additionalCategory == "exempt") {
+              SendUpdatedIncome();
+            } else {
+              SendUpdatedDonation();
+            }
 
             updateInputs(function (prev) {
               return {

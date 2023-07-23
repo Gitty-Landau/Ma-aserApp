@@ -5,14 +5,18 @@ import Button from "../../../../../Button/Button";
 import Income from "../../../../Income/Income";
 
 function Trow(props) {
-  console.log(props);
   function GetCategoryText(donation) {
-    if (donation.category != true && donation.category != false) {
+    if (
+      donation.category != true &&
+      donation.category != false &&
+      !donation.exempt
+    ) {
       return donation.category;
     } else {
-      return donation.category ? "Yes" : "No";
+      return donation.exempt == true ? "Yes" : "No";
     }
   }
+
   return (
     <tr>
       <td>
@@ -46,8 +50,8 @@ function Trow(props) {
           <td
             onClick={() => {
               props.type == "donations"
-                ? props.updateEditID(props.donationID)
-                : props.updateEditID(props.incomeID);
+                ? props.updateEditID(props.obj.donationID)
+                : props.updateEditID(props.obj.incomeID);
             }}
           >
             <Button text="Edit"></Button>
