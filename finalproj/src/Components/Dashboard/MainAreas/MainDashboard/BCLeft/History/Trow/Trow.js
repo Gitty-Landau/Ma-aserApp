@@ -2,15 +2,11 @@ import "./Trow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../../Button/Button";
-import Income from "../../../../Income/Income";
 
 function Trow(props) {
   function GetCategoryText(donation) {
-    if (
-      donation.category != true &&
-      donation.category != false &&
-      !donation.exempt
-    ) {
+    console.log(donation);
+    if (props.type == "donations") {
       return donation.category;
     } else {
       return donation.exempt == true ? "Yes" : "No";
@@ -36,7 +32,7 @@ function Trow(props) {
         ) : (
           <FontAwesomeIcon
             className="point"
-            icon={props.obj.exempt ? faCheck : faXmark}
+            icon={props.obj.exempt == 1 ? faCheck : faXmark}
           />
         )}
 

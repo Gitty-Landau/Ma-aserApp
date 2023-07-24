@@ -18,10 +18,12 @@ function Dashboard(props) {
   const [payments, updatePayments] = useState([]);
   const [donations, updateDonations] = useState([]);
   const [userId, updateUserId] = useState(0);
+  const [startDate, updateStartDate] = useState("2023-01-01");
+  const [endDate, updateEndDate] = useState("2023-07-19");
   async function loadPayments() {
     try {
       let result = await get(
-        `http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=${userId}&startDate=2023-01-01&endDate=2023-07-19`
+        `http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetIncome.php/?id=${userId}&startDate=${startDate}&endDate=${endDate}`
       );
       result = result.map((element) => {
         return { ...element, category: element.exempt };
@@ -35,7 +37,7 @@ function Dashboard(props) {
   async function loadDonations() {
     try {
       let result = await get(
-        `http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=${userId}&startDate=2023-01-01&endDate=2023-07-19`
+        `http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetDonation.php/?id=${userId}&startDate=${startDate}&endDate=${endDate}`
       );
       updateDonations(result);
     } catch (e) {
@@ -46,7 +48,7 @@ function Dashboard(props) {
   useEffect(() => {
     loadPayments();
     loadDonations();
-  }, []);
+  }, [userId]);
   const labels = {
     "Hachnasas Kallah": "#eb7ca6",
     "Helping the Poor": "#ffacc8",
@@ -76,16 +78,19 @@ function Dashboard(props) {
   }
   async function SendPaymentToDB(obj) {
     //fetch
-    obj.exempt = obj.exempt.toString();
+    if (obj.exempt == true) {
+      obj.exempt = 1;
+    } else {
+      obj.exempt = 0;
+    }
     obj.userID = userId;
     console.log(obj);
     try {
       const result = await post(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddIncome.php",
         obj
       );
       obj.incomeID = result;
-      console.log(obj);
       AddPayment(obj);
       return result;
     } catch (e) {
@@ -95,10 +100,9 @@ function Dashboard(props) {
   async function SendDonationToDB(obj) {
     //fetch
     obj.userID = userId;
-
     try {
       const result = await post(
-        "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
+        "http://localhost/FinalProject/FinalProjectPhp/Endpoints/AddDonation.php",
         obj
       );
       obj.donationID = result;
@@ -111,7 +115,7 @@ function Dashboard(props) {
   }
   function DeletePayment(obj) {
     remove(
-      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
+      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/DeleteIncome.php",
       { IncomeID: obj.incomeID }
     );
     updatePayments(function (prev) {
@@ -165,7 +169,14 @@ function Dashboard(props) {
           <LoginForm updateUserId={updateUserId}></LoginForm>
         )}
       ></ReactModal>
-      <Header></Header>
+      <Header
+        loadPayments={loadPayments}
+        loadDonations={loadDonations}
+        startDate={startDate}
+        endDate={endDate}
+        updateStartDate={updateStartDate}
+        updateEndDate={updateEndDate}
+      ></Header>
       {ComponentArray[props.displayTab]}
     </main>
   );

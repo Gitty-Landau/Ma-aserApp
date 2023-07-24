@@ -4,11 +4,10 @@ import { get } from "../../../Fetch";
 function LoginForm(props) {
   const [inputs, updateInputs] = useState({});
   async function GetUser() {
-    console.log(inputs);
     let result = await get(
-      `http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/GetUserAccount.php/?email=${inputs.email}&password=${inputs.password}`
+      `http://localhost/FinalProject/FinalProjectPhp/Endpoints/GetUserAccount.php/?email=${inputs.email}&password=${inputs.password}`
     );
-    props.updateUserId(result);
+    props.updateUserId(result[0]);
   }
   return (
     <div class="box">

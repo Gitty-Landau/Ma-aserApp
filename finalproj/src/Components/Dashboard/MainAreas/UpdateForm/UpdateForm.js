@@ -16,13 +16,13 @@ function UpdateForm(props) {
   );
   async function SendUpdatedIncome() {
     let result = await put(
-      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/EditIncome.php",
+      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/EditIncome.php",
       inputs
     );
   }
   async function SendUpdatedDonation() {
     let result = await put(
-      "http://localhost:8888/FinalProject/FinalProjectPhp/Endpoints/EditDonation.php",
+      "http://localhost/FinalProject/FinalProjectPhp/Endpoints/EditDonation.php",
       inputs
     );
   }
